@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Jen Bentulan | AI Image Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800&family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+body {
+    background-color: #1b1109;
+    color: #f0e6d8;
+    overflow-x: hidden
+    }
+.grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAQQ42lIykhOMQsj2ZmHY5RFzC-EiKnKL5i0WUsfD7eHdZw2rmw1M4Zjv_M2bQQwR37pMaVM_uujQ6lcDwpdpcUqtMlV8quAQhTC53stcRPNWpzV6n9tE99zbh_QKo3fU-HoAjJyc9jNVVyaz9kzNJ4ujwAIzpIg_Uc7EPCEPFDbu6TVDTOEJ7s6TQZHFurojWgrZtxk9sXxFUKSfg-1-WIr73D22oAeduJjPnmRcQmwnKTZAliCwABH18KfMVqUyjlDih0_QfzYfc)
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    vertical-align: middle
+    }
+.glass-card {
+    backdrop-filter: blur(12px);
+    background: rgba(34, 21, 8, 0.7)
+    }
+.border-figma {
+    border: 1px solid #4a3120
+    }
+.text-balance {
+    text-wrap: balance;
+    }
+.tile-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(to top, rgba(27,17,9,0.95) 0%, rgba(27,17,9,0.4) 55%, rgba(27,17,9,0.05) 100%);
+    }
+.tile:hover .tile-overlay, .tile:focus-visible .tile-overlay {
+    opacity: 1;
+    }
+.tile img, .tile video {
+    transition: transform 0.5s ease;
+    }
+.tile:hover img, .tile:hover video {
+    transform: scale(1.06);
+    }
+.woodblock-tag {
+    background: #f07820;
+    color: #fff5e8;
+    border: 1px solid #ffdbc9;
+    writing-mode: horizontal-tb;
+    }
+#modal {
+    display: none;
+    }
+#modal.open {
+    display: flex;
+    }
+</style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "secondary-container": "#bb8800",
+                        "secondary-fixed-dim": "#f8bd41",
+                        "outline": "#a68b7d",
+                        "on-primary-fixed": "#321200",
+                        "tertiary-fixed": "#ffdcbc",
+                        "on-primary": "#532200",
+                        "tertiary-container": "#b49474",
+                        "surface-primary": "#221508",
+                        "inverse-primary": "#9a4600",
+                        "surface-container-highest": "#3f3228",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "inverse-surface": "#f4ded0",
+                        "text-main": "#f0e6d8",
+                        "on-tertiary-container": "#432d15",
+                        "inverse-on-surface": "#3b2e24",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#291d14",
+                        "on-tertiary-fixed": "#2a1703",
+                        "primary-fixed-dim": "#ffb68c",
+                        "tertiary": "#e4c09d",
+                        "on-surface": "#f4ded0",
+                        "primary": "#ffb68c",
+                        "error": "#ffb4ab",
+                        "border-low": "#4a3120",
+                        "tertiary-fixed-dim": "#e4c09d",
+                        "surface-variant": "#3f3228",
+                        "secondary-fixed": "#ffdea5",
+                        "border-high": "#5a3d28",
+                        "on-surface-variant": "#dec1b1",
+                        "background": "#1b1109",
+                        "surface-tint": "#ffb68c",
+                        "on-secondary-fixed": "#271900",
+                        "secondary": "#f8bd41",
+                        "outline-variant": "#574237",
+                        "on-secondary-container": "#382700",
+                        "surface-container-low": "#241911",
+                        "on-tertiary": "#422c13",
+                        "on-secondary": "#412d00",
+                        "text-muted": "#b09070",
+                        "primary-fixed": "#ffdbc9",
+                        "on-background": "#f4ded0",
+                        "surface": "#1b1109",
+                        "surface-container-lowest": "#160c05",
+                        "surface-bright": "#44372d",
+                        "surface-interactive": "#311f10",
+                        "on-primary-container": "#552300",
+                        "primary-container": "#f07820",
+                        "surface-secondary": "#2a1c0f",
+                        "surface-dim": "#1b1109",
+                        "on-tertiary-fixed-variant": "#5b4227",
+                        "on-primary-fixed-variant": "#753400",
+                        "surface-container-high": "#34281e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "24px",
+                        "gutter": "24px",
+                        "stack-lg": "48px",
+                        "container-default": "960px",
+                        "container-wide": "1200px",
+                        "base": "4px",
+                        "margin-page": "clamp(2rem, 8vw, 6rem)",
+                        "stack-sm": "12px"
+                    },
+                    "fontFamily": {
+                        "section-header": ["Cabinet Grotesk"],
+                        "hero-display": ["Cabinet Grotesk"],
+                        "editorial-serif": ["Instrument Serif"],
+                        "lead-text": ["Hanken Grotesk"],
+                        "caption-xs": ["Hanken Grotesk"],
+                        "body-base": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Cabinet Grotesk"],
+                        "headline-lg": ["Cabinet Grotesk"],
+                        "label-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "section-header": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "hero-display": ["96px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "editorial-serif": ["32px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                        "lead-text": ["20px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "caption-xs": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "body-base": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-body-base bg-background text-text-main selection:bg-primary-container selection:text-on-primary-container">
+<div class="grain"></div>
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-low">
+<div class="flex items-center h-16 px-gutter max-w-container-wide mx-auto justify-between gap-8">
+<a href="#" class="font-section-header text-lead-text text-primary">Jen Bentulan</a>
+<div class="flex gap-stack-md items-center">
+<a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-text-main transition-colors" href="#gallery">Gallery</a>
+<a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant hover:text-text-main transition-colors" href="https://supahsushi.github.io/portfolio/index.html">iOS Portfolio</a>
+</div>
+</div>
+</nav>
+
+<main class="pt-16">
+<!-- Hero Banner -->
+<section class="relative w-full">
+<div class="w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden border-b border-low">
+<img src="images/sushi-champloo.png" alt="Sushi Champloo banner" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+</div>
+<div class="max-w-container-wide mx-auto px-margin-page -mt-24 relative z-10 pb-16">
+<p class="font-label-sm text-label-sm text-primary uppercase tracking-[0.2em] mb-4">AI IMAGE PORTFOLIO</p>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-6 leading-none">
+Ideas <span class="font-editorial-serif italic font-normal text-secondary">brought to life</span> with AI.
+</h1>
+<p class="font-editorial-serif text-editorial-serif max-w-2xl text-on-surface-variant text-balance">
+A collection of AI-generated worlds, characters, and concepts — each one built around an idea I wanted to see exist.
+</p>
+</div>
+</section>
+
+<!-- Gallery -->
+<section class="max-w-container-wide mx-auto px-margin-page mb-32" id="gallery">
+<div class="mb-12 flex justify-between items-end border-b border-low pb-4">
+<h2 class="font-section-header text-section-header">Gallery</h2>
+<p class="font-label-sm text-label-sm text-text-muted">HOVER OR TAP TO VIEW</p>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-1 md:gap-2">
+
+<!-- Series Divider -->
+<div class="col-span-2 md:col-span-3 flex items-center gap-4 mt-4 mb-2 first:mt-0">
+<div class="h-px flex-1 bg-border-low"></div>
+<span class="woodblock-tag px-4 py-2 font-label-sm text-label-sm uppercase tracking-[0.3em] rounded-sm">Sushi Critters</span>
+<div class="h-px flex-1 bg-border-low"></div>
+</div>
+
+<!-- Tile: Sushi Champloo -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Sushi Champloo" data-image="images/sushi-champloo.png" data-description="Sushi Champloo is an AI-powered creative universe where sushi, cute characters, global cultures, and imaginative ideas are mixed and blended together. Inspired by the meaning of &quot;champloo&quot; — a mix of different ingredients and influences — it brings colorful characters to life through playful adventures, games, food, and vibrant fantasy worlds.">
+<img src="images/sushi-champloo.png" alt="Sushi Champloo" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Champloo</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Penguin Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Penguin Sushi" data-image="images/penguin-sushi.png" data-description="I wanted to see a little penguin enjoying sushi the way I would, chopsticks and all, but painted like a traditional Japanese woodblock print. There's something about pairing a soft, silly little guy with that classic Hokusai wave and Mt. Fuji backdrop that just makes me happy. It's playful and a little nostalgic, like a piece of art you'd find tucked into an old sushi shop, but with a character who clearly loves his food a little too much.">
+<img src="images/penguin-sushi.png" alt="Penguin Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Penguin Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Chick Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Chick Sushi" data-image="images/chick-sushi.png" data-description="This one's the little sister to Penguin Sushi. I wanted a tiny, fluffy baby chick holding her chopsticks like she means business, still in that same woodblock world with the wave and Mt. Fuji behind her. Something about her round little body and closed happy eyes just feels like pure comfort to me, like the kind of character I'd want on a sticker or a mug. She's soft, she's proud of her sushi, and she's not sharing.">
+<img src="images/chick-sushi.png" alt="Chick Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Chick Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Pig Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Pig Sushi" data-image="images/pig-sushi.png" data-description="For this one I wanted to move the scene out of the wave and mountain and into a cherry blossom garden, with a little stone lantern and a quiet countryside house in the back. The pig is just fully in his moment, eyes closed, cheeks flushed, completely lost in how good that piece of sushi is. I love characters that show real joy over something simple, and to me this is what it feels like to genuinely enjoy your food without overthinking it.">
+<img src="images/pig-sushi.png" alt="Pig Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Pig Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Cat Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Cat Sushi" data-image="images/cat-sushi.png" data-description="I gave this little kitten her own backdrop this time, a quiet riverside with a pagoda on one side and a torii gate out in the water on the other. She's got that classic orange tabby coloring and she's biting into her sushi with her eyes squeezed shut, paws up like she can't help herself. I really wanted each character in this series to feel like they belong in their own little corner of Japan, and this one turned out so peaceful and warm.">
+<img src="images/cat-sushi.png" alt="Cat Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Cat Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Whale Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Whale Sushi" data-image="images/whale-sushi.png" data-description="This one flips the whole idea on its head, instead of an animal eating sushi, I wanted a gentle giant whale swallowing a giant squid roll and krill underwater, like the ocean itself was the one setting the table. I liked the idea of taking the series somewhere completely different, out of the classic wave and mountain scene and into the deep blue, with little shrimp swimming around like it's just another day at sea.">
+<img src="images/whale-sushi.png" alt="Whale Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Whale Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Bunny Concert -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Bunny Concert" data-image="images/bunny-concert.png" data-description="This one came from watching a huge stadium performance and getting completely swept up in the energy of it, the lights, the crowd singing along, that feeling of everyone being fully present in one moment. I wanted to translate that into something soft and a little silly, so I turned it into a chubby rabbit belting it out on stage under paper lanterns, with a whole crowd of rabbit fans packed in to watch. It's really just about capturing that feeling of a night you don't want to end.">
+<img src="images/bunny-concert.png" alt="Bunny Concert" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Bunny Concert</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Duck Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Duck Sushi" data-image="images/duck-sushi.png" data-description="I set this one at golden hour by a quiet river with a torii gate way off in the distance, just to slow things down a bit compared to the others. It's a soft little duckling holding her sushi so carefully, completely content in her own peaceful spot in nature. Honestly I just wanted another baby animal in the mix because people can't resist them, and there's something about her calm, sleepy expression that makes this one feel like a nice place to pause.">
+<img src="images/duck-sushi.png" alt="Duck Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Duck Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Baby Shark -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Baby Shark" data-image="images/baby-shark.png" data-description="Just a baby shark, in the same traditional Japanese woodblock style as the rest of the underwater crew. I liked keeping her round and soft instead of sharp and toothy, floating over her own little sushi spread with a pagoda glowing faintly in the distance. She fits right in with the others, proof that even the ocean's usual tough guy can be turned into something gentle and huggable.">
+<img src="images/baby-shark.png" alt="Baby Shark" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Baby Shark</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Crocodile Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Crocodile Sushi" data-image="images/crocodile-sushi.png" data-description="This little guy gets a totally different backdrop from the others, cherry blossoms drifting down next to a castle across the water instead of the usual wave and mountain. I wanted to prove that even a crocodile, which is normally the last thing you'd call cute, could fit right into this soft, cozy world if I gave him rounded scales, chubby cheeks, and the same closed-eye happy bite everyone else in this series has.">
+<img src="images/crocodile-sushi.png" alt="Crocodile Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Crocodile Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Cubs Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Cubs Sushi" data-image="images/cubs-sushi.png" data-description="A companion piece to Cubs Pastries, same three bear cubs, same lake and Mt. Fuji and cherry blossoms, but this time they're sharing a full spread of assorted nigiri instead of sweets. I liked giving this little bear family two different moments, one for their sweet tooth and one for sushi, so it feels like you're catching them on two separate days out. Each cub gets their own piece to hold, which somehow makes it feel more like a real little picnic.">
+<img src="images/cubs-sushi.png" alt="Cubs Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Cubs Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Pelicans Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Pelicans Sushi" data-image="images/pelicans-sushi.png" data-description="This one's a little rowdier than the rest. Five pelicans crowded around a table inside a cozy sushi spot, clinking cans together like they're celebrating something, beaks stuffed with shrimp and roe. I wanted a scene that felt like an after work hangout instead of a quiet solo bite, something with noise and friends and that easy, happy chaos of a good night out. The pelican beaks made the whole thing funnier than I expected, honestly.">
+<img src="images/pelicans-sushi.png" alt="Pelicans Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Pelicans Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Chef Cat Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Chef Cat Sushi" data-image="images/chef-cat-sushi.png" data-description="I wanted to flip the usual scene and put one of these characters behind the counter instead of just eating, so this little ginger cat is dressed as the chef, headband and all, working out of a cozy old-school sushi shop with a paper lantern glowing overhead. She's not just enjoying a piece of nigiri, she made it herself. Something about giving her that pride and skill instead of just hunger made this one feel like a small level up for the whole series.">
+<img src="images/chef-cat-sushi.png" alt="Chef Cat Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Chef Cat Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Mochi & Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Mochi & Sushi" data-image="images/mochi-sushi.png" data-description="This one's about the process instead of just the eating. A kitten and a puppy doing mochitsuki together, pounding rice with the big wooden mallet while a plate of sushi and a plate of fresh mochi wait on the side. I liked showing two different friends working as a team for once instead of one character enjoying a meal alone, and pairing sushi with mochi felt like a fun way to show there's more than one kind of rice dish in this world.">
+<img src="images/mochi-sushi.png" alt="Mochi and Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Mochi &amp; Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Puppy Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Puppy Sushi" data-image="images/puppy-sushi.png" data-description="I brought the scene indoors for this one, a cozy little shop with a paper lantern glowing and a view of the mountains through the window, just for this puppy and his sushi. He's got a little bandana on and the softest, happiest expression of the whole bunch. There's nothing complicated about this one, it's just about a good meal in a warm, quiet spot, and sometimes that's exactly the feeling I want to capture.">
+<img src="images/puppy-sushi.png" alt="Puppy Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Puppy Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Eagle Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Eagle Sushi" data-image="images/eagle-sushi.png" data-description="This one's dressed up more than the others, a bald eagle wrapped in a full kimono, sitting down to a proper spread with sake on the side and Mt. Fuji glowing behind him at sunset. I wanted this piece to feel a little more formal and painterly, like a real ukiyo-e print you'd find framed somewhere, banners and seals and all. He's still got that same soft, happy energy as everyone else, just dressed for the occasion.">
+<img src="images/eagle-sushi.png" alt="Eagle Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Eagle Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Otter Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Otter Sushi" data-image="images/otter-sushi.png" data-description="Another one in that same dressed up, painterly style, an otter in a blue floral kimono holding chopsticks up to his mouth with a whole tray of nigiri and rolls laid out in front of him, a pagoda and lantern glowing off in the distance. The little paw print stamp and the banners in the corner make it feel like part of an actual set now, like these could all hang together as a series of prints. He's got that same pure joy on his face that ties every piece in this world together.">
+<img src="images/otter-sushi.png" alt="Otter Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Otter Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Macaques Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Macaques Sushi" data-image="images/macaques-sushi.png" data-description="A whole troop of snow monkeys gathered around a shared spread, hot spring banner and Mt. Fuji in the background, everyone digging in together. I wanted a group moment for this series, something that felt like a real family dinner instead of one character eating alone, with each monkey grabbing their own favorite piece. There's a warmth to a table full of friends passing food around that felt worth capturing in this style.">
+<img src="images/macaques-sushi.png" alt="Macaques Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Macaques Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Wolf Pups Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Wolf Pups Sushi" data-image="images/wolf-pups-sushi.png" data-description="Five wolf pups all crowded around one big shared platter, a red lantern glowing overhead and Mt. Fuji watching over the whole scene. I liked giving this one its own little title banners in the corners, almost like it's part of an actual numbered print series now. Every pup has a different reaction to their piece, some mid-bite, some just staring at the spread in awe, which makes it feel like a real chaotic, happy family meal.">
+<img src="images/wolf-pups-sushi.png" alt="Wolf Pups Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Wolf Pups Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Frogs Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Frogs Sushi" data-image="images/frogs-sushi.png" data-description="A little frog gathering this time, complete with their own lantern, their own banner, even their own tiny frog stamped teacups and plates. I really leaned into making this one feel like a full branded set, like this frog crew has their own restaurant with their own merch. Big round eyes and wide grins everywhere, it's probably the goofiest looking group in the whole series and I mean that as a compliment.">
+<img src="images/frogs-sushi.png" alt="Frogs Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Frogs Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Turtles Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Turtles Sushi" data-image="images/turtles-sushi.png" data-description="Five baby turtles around a low round table this time, and I gave them their own little sign that reads Sea Turtle Diner, like it's their actual family restaurant. Everyone's got their own piece in hand, one's even using chopsticks properly, which felt like a fun detail to add. This one turned out so soft and rounded, from the shells to the faces, it might be one of my favorites out of the whole critters group.">
+<img src="images/turtles-sushi.png" alt="Turtles Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Turtles Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Puppies & Kittens Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Puppies & Kittens Sushi" data-image="images/puppies-kittens-sushi.png" data-description="This is probably the biggest crossover in the whole series, three dogs and three cats all sharing one table in matching kimonos, with a little lucky cat statue and sake set nearby. I liked the idea of finally mixing species at the same table instead of keeping everyone separate, like this is the neighborhood gathering everyone gets invited to. Between the headbands, the flower crowns, and everyone's chopstick technique, this one just feels like a proper celebration.">
+<img src="images/puppies-kittens-sushi.png" alt="Puppies and Kittens Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Puppies &amp; Kittens Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Series Divider -->
+<div class="col-span-2 md:col-span-3 flex items-center gap-4 mt-12 mb-2">
+<div class="h-px flex-1 bg-border-low"></div>
+<span class="woodblock-tag px-4 py-2 font-label-sm text-label-sm uppercase tracking-[0.3em] rounded-sm">Sushi Series</span>
+<div class="h-px flex-1 bg-border-low"></div>
+</div>
+
+<!-- Tile: SupAhSusHi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="SupAhSusHi" data-image="images/supahsushi-mascot.png" data-description="I've had this alias for 26 years. Back in the day, the people who knew me knew me as &quot;SupAhSusHi&quot;, so they'd call me Soopah or Sushi for short. This little guy is basically that name turned into a character, a happy piece of sushi in a cape, sparkly and a bit extra, which honestly tracks. Everything in this whole sushi universe kind of traces back to this alias, so it felt right to finally give it a face.">
+<img src="images/supahsushi-mascot.png" alt="SupAhSusHi mascot" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">SupAhSusHi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: SupAhSusHi Cover -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="SupAhSusHi Cover" data-image="images/supahsushi-cover.png" data-description="I took the alias all the way this time and turned it into a full comic book cover, logo and all, wax paper cape flapping, striking a hero pose on a rock above the waves with the city skyline behind him. Little tags like 100% Nigiri Power and Justice is best served fresh are just me having fun with the whole superhero bit. Out of everything in this series, this one feels the most like an actual brand, like SupAhSusHi could be a real character with his own comic.">
+<img src="images/supahsushi-cover.png" alt="SupAhSusHi Cover" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">SupAhSusHi Cover</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Sushi Mecha -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="Sushi Mecha" data-image="images/sushi-mecha.png" data-description="I wanted a version of my alias I could actually use as an avatar, something small and toy-like but with a bit of an edge to it, so this is a chibi kawaii mecha built out of a salmon nigiri, dual wielding chopsticks like swords with soy sauce dripping like it just got out of a fight. It's got that collectible figure look I really love, big eyes, round proportions, but armored up. Basically SupAhSusHi if it went into battle mode.">
+<img src="images/sushi-mecha.png" alt="Sushi Mecha" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Mecha</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Sushi Ronin -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="Sushi Ronin" data-image="images/sushi-ronin.png" data-description="Same salmon nigiri character, different mood, this time dressed as a wandering ronin, face wrapped, twin chopsticks drawn like swords, ready for whatever's coming. I wanted to give my avatar a bit of range, not just cute but also a little fierce, like there's a whole backstory behind the cape and the cape's cousin. Same soft round face and big eyes as always, just with a lot more attitude this time around.">
+<img src="images/sushi-ronin.png" alt="Sushi Ronin" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Ronin</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Sushi Samurai -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="Sushi Samurai" data-image="images/sushi-samurai.png" data-description="This is the full armored version of my little avatar, sushi roll shoulder guards, a nori and salmon helmet with a dab of wasabi on top like a crest, and the same double chopstick stance. I wanted to push the samurai idea even further than the ronin one, more built up, more decorated, like he leveled up. Every piece of the armor is made out of something you'd actually find on a sushi plate, which is honestly my favorite detail in this whole set.">
+<img src="images/sushi-samurai.png" alt="Sushi Samurai" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Samurai</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Sushi Pirate -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="Sushi Pirate" data-image="images/sushi-pirate.png" data-description="Another outfit change for the same little guy, this time a full pirate captain with an eyepatch, tricorn hat, and the chopstick swords sheathed at his side instead of drawn. The skull and crossbones made out of little fish bones was a fun detail to sneak in there. Out of all the versions of him so far, ronin, samurai, mecha, this one feels the most mischievous, like he's the type to actually cause some trouble.">
+<img src="images/sushi-pirate.png" alt="Sushi Pirate" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Pirate</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Sushi Saurus -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="Sushi Saurus" data-image="images/sushi-saurus.png" data-description="This time I turned the whole avatar concept into a little dinosaur instead of a person, same salmon nigiri head and giant sparkly eyes, but now with a mechanical dino body, wasabi colored claws, and a curled tail. I wanted to see how far I could stretch this character before it stopped feeling like part of the same world, and honestly a sushi headed robot dinosaur still fits right in. He might be my favorite one to look at out of all the mecha versions so far.">
+<img src="images/sushi-saurus.png" alt="Sushi Saurus" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Saurus</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Sushi Unicorn -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left bg-surface-container-lowest" data-title="Sushi Unicorn" data-image="images/sushi-unicorn.png" data-description="This one's probably the sparkliest version yet, a little sushi unicorn with an edamame horn and cat-like ears, plus a flowing tail that fades from salmon orange into wasabi green. I wanted something that felt extra magical and soft compared to the mecha and armor versions, more whimsical, less battle ready. Between the sparkles and the little flower details on the ear cuffs, this one feels like the dreamiest character in the whole set.">
+<img src="images/sushi-unicorn.png" alt="Sushi Unicorn" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Unicorn</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Series Divider -->
+<div class="col-span-2 md:col-span-3 flex items-center gap-4 mt-12 mb-2">
+<div class="h-px flex-1 bg-border-low"></div>
+<span class="woodblock-tag px-4 py-2 font-label-sm text-label-sm uppercase tracking-[0.3em] rounded-sm">Sweet Treats</span>
+<div class="h-px flex-1 bg-border-low"></div>
+</div>
+
+<!-- Tile: Cubs Pastries -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Cubs Pastries" data-image="images/cubs-pastries.png" data-description="I wanted to take a break from sushi and just do something purely about sweets, three baby bear cubs sharing donuts, a stack of chocolate pancakes, and chocolate crepes together by a lake with Mt. Fuji in the background. Each cub has their own treat and their own little personality in how they're eating it, and I liked the idea of a cozy picnic moment instead of a solo character. It felt like a nice, warm way to grow this world past just sushi.">
+<img src="images/cubs-pastries.png" alt="Cubs Pastries" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Cubs Pastries</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Series Divider -->
+<div class="col-span-2 md:col-span-3 flex items-center gap-4 mt-12 mb-2">
+<div class="h-px flex-1 bg-border-low"></div>
+<span class="woodblock-tag px-4 py-2 font-label-sm text-label-sm uppercase tracking-[0.3em] rounded-sm">Sushi Beats</span>
+<div class="h-px flex-1 bg-border-low"></div>
+</div>
+
+<!-- Tile: DJ Sushi Girl -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="DJ Sushi Girl" data-image="images/dj-sushi-girl.png" data-description="This one's a big style jump for me, chibi anime instead of woodblock, neon strobe lights instead of Mt. Fuji. She's a little DJ spinning sushi shaped turntables, wearing salmon and tamago nigiri as her headphones, completely in her element under the lights. I gave her an actual logo in this revised version, Sushi Beats, glowing up in the corner like it's her real stage name, with little happy nigiri floating around and neon equalizer bars behind her so it reads like real cover art instead of just a character portrait.">
+<img src="images/dj-sushi-girl.png" alt="DJ Sushi Girl" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">DJ Sushi Girl</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Series Divider -->
+<div class="col-span-2 md:col-span-3 flex items-center gap-4 mt-12 mb-2">
+<div class="h-px flex-1 bg-border-low"></div>
+<span class="woodblock-tag px-4 py-2 font-label-sm text-label-sm uppercase tracking-[0.3em] rounded-sm">Sushi Kart</span>
+<div class="h-px flex-1 bg-border-low"></div>
+</div>
+
+<!-- Tile: Sushi Kart Racers -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Sushi Kart Racers" data-image="images/sushi-kart-racers.png" data-description="This one's basically my whole cast crammed into one go kart shaped like a piece of nigiri, flames shooting out the back, racing down a dirt track with Mt. Fuji and a cheering crowd behind them. Cat's driving, with a bunny, a bandana wearing dog, and a tiny dinosaur all piled in behind her. I wanted a moment where the characters actually interact as a group instead of each having their own solo scene, like they all know each other and this is just a regular Saturday.">
+<img src="images/sushi-kart-racers.png" alt="Sushi Kart Racers" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Kart Racers</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Series Divider -->
+<div class="col-span-2 md:col-span-3 flex items-center gap-4 mt-12 mb-2">
+<div class="h-px flex-1 bg-border-low"></div>
+<span class="woodblock-tag px-4 py-2 font-label-sm text-label-sm uppercase tracking-[0.3em] rounded-sm">Sushi House</span>
+<div class="h-px flex-1 bg-border-low"></div>
+</div>
+
+<!-- Tile: Sushi Home (wide feature) -->
+<button type="button" class="tile relative col-span-2 md:col-span-3 aspect-[16/9] overflow-hidden group text-left" data-title="Sushi Home" data-image="images/sushi-home.png" data-description="This is the whole world in one shot, a LEGO style sushi house with tiny nigiri characters heading out the door, briefcases in hand, next to their little sushi shaped car in the driveway. The sign out front says Sushi Home and the one by the garden says Good Food Good Life, which is basically the whole philosophy of this series in a sentence. I wanted a piece that felt like home base, the place all these characters actually live when they're not off having their own adventures.">
+<img src="images/sushi-home.png" alt="Sushi Home" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-6">
+<h3 class="font-section-header text-2xl text-text-main">Sushi Home</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Sushi Chef -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Sushi Chef" data-image="images/sushi-chef.png" data-description="I wanted one piece in this whole world that steps back and shows where all this sushi actually comes from, so this is a veteran chef, calm hands, warm smile, working behind his counter with cherry blossoms outside the window. Everything else in this series is about characters enjoying sushi, but this one is about the craft and care behind it. He felt like the right anchor for the whole collection, the quiet heart of it all.">
+<img src="images/sushi-chef.png" alt="Sushi Chef" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Sushi Chef</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Tile: Robots Sushi -->
+<button type="button" class="tile relative aspect-square overflow-hidden group text-left" data-title="Robots Sushi" data-image="images/robots-sushi.png" data-description="This one's just four little robots clinking beers together over a shared plate of sushi, cherry blossoms and Mt. Fuji glowing behind them like any other night out with friends. I liked the idea of taking something as cold and mechanical as a robot and putting it in the warmest, most human moment I could think of, toasting with the people you love. Even in a world full of animals eating sushi, I wanted to see what happens when it's robots doing the celebrating instead.">
+<img src="images/robots-sushi.png" alt="Robots Sushi" class="w-full h-full object-cover">
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-4">
+<h3 class="font-section-header text-lg text-text-main">Robots Sushi</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Series Divider -->
+<div class="col-span-2 md:col-span-3 flex items-center gap-4 mt-12 mb-2">
+<div class="h-px flex-1 bg-border-low"></div>
+<span class="woodblock-tag px-4 py-2 font-label-sm text-label-sm uppercase tracking-[0.3em] rounded-sm">Dream Cafes</span>
+<div class="h-px flex-1 bg-border-low"></div>
+</div>
+
+<!-- Tile: Oasis Cafe (wide feature, video) -->
+<button type="button" class="tile relative col-span-2 md:col-span-3 aspect-[16/9] overflow-hidden group text-left" data-title="Oasis Cafe" data-image="images/oasis-cafe.png" data-video="videos/oasis-cafe.mp4" data-description="This one's my own reimagined version of a real cafe I love in Saigon, Vietnam, a spot with a koi pond built right into the floor so you're basically sitting among the fish while you eat. I swapped in my usual cast of animal characters and gave everyone their own sushi platter and drink, just to see what it would look like if that dreamy real place also happened to serve my sushi world's food. Worth noting this is my own fan reimagining, not an actual menu or something the real cafe offers, I just love the space that much.">
+<video class="w-full h-full object-cover" src="videos/oasis-cafe.mp4" poster="images/oasis-cafe.png" autoplay muted loop playsinline></video>
+<div class="tile-overlay absolute inset-0 flex flex-col justify-end p-6">
+<h3 class="font-section-header text-2xl text-text-main">Oasis Cafe</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mt-1">View concept</p>
+</div>
+</button>
+
+<!-- Coming soon placeholder -->
+<div class="relative aspect-square overflow-hidden border border-dashed border-low flex flex-col items-center justify-center gap-2 text-text-muted">
+<span class="material-symbols-outlined text-3xl">add_photo_alternate</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">More coming soon</span>
+</div>
+
+</div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-surface-container border-t border-low w-full py-stack-lg">
+<div class="flex flex-col md:flex-row justify-between items-center gap-stack-md px-margin-page max-w-container-default mx-auto">
+<p class="font-body-base text-text-muted">© 2026 JenB • Built with precision &amp; caffeine</p>
+<div class="flex gap-6">
+<a class="text-text-muted hover:text-text-main transition-colors underline decoration-primary decoration-2 underline-offset-4" href="https://github.com/supahsushi">GitHub</a>
+<a class="text-text-muted hover:text-text-main transition-colors underline decoration-primary decoration-2 underline-offset-4" href="https://www.linkedin.com/in/jin4">LinkedIn</a>
+<a class="text-text-muted hover:text-text-main transition-colors underline decoration-primary decoration-2 underline-offset-4" href="mailto:sushimixx@gmail.com">Email</a>
+</div>
+</div>
+</footer>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 z-[100] items-center justify-center p-4 md:p-12 bg-background/90 backdrop-blur-sm">
+<div class="relative max-w-4xl w-full max-h-full overflow-y-auto border-figma rounded-3xl glass-card p-6 md:p-10 flex flex-col md:flex-row gap-8">
+<button id="modal-close" class="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-surface-interactive border border-low flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="md:w-1/2 rounded-2xl overflow-hidden border border-low shrink-0">
+<img id="modal-image" src="" alt="" class="w-full h-full object-cover">
+<video id="modal-video" class="w-full h-full object-cover hidden" controls loop playsinline></video>
+</div>
+<div class="md:w-1/2 flex flex-col justify-center gap-4">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Concept</span>
+<h3 id="modal-title" class="font-section-header text-section-header text-primary"></h3>
+<p id="modal-description" class="font-lead-text text-lead-text text-on-surface-variant leading-relaxed text-balance"></p>
+</div>
+</div>
+</div>
+
+<script>
+const modal = document.getElementById('modal');
+const modalImage = document.getElementById('modal-image');
+const modalVideo = document.getElementById('modal-video');
+const modalTitle = document.getElementById('modal-title');
+const modalDescription = document.getElementById('modal-description');
+
+document.querySelectorAll('.tile').forEach(tile => {
+    tile.addEventListener('click', () => {
+        if (tile.dataset.video) {
+            modalVideo.src = tile.dataset.video;
+            modalVideo.poster = tile.dataset.image;
+            modalVideo.classList.remove('hidden');
+            modalImage.classList.add('hidden');
+            modalVideo.play();
+        } else {
+            modalImage.src = tile.dataset.image;
+            modalImage.alt = tile.dataset.title;
+            modalImage.classList.remove('hidden');
+            modalVideo.classList.add('hidden');
+            modalVideo.pause();
+            modalVideo.removeAttribute('src');
+        }
+        modalTitle.textContent = tile.dataset.title;
+        modalDescription.textContent = tile.dataset.description;
+        modal.classList.add('open');
+    });
+});
+
+function closeModal() {
+    modal.classList.remove('open');
+    modalVideo.pause();
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
