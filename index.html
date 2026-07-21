@@ -63,6 +63,30 @@ body {
 #modal.open {
     display: flex;
     }
+img, video {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    }
+.watermark {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    }
+.watermark span {
+    color: rgba(240, 230, 216, 0.16);
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: rotate(-30deg);
+    }
 </style>
 <script id="tailwind-config">
         tailwind.config = {
@@ -604,7 +628,7 @@ A collection of AI-generated worlds, characters, and concepts — each one built
 <!-- Footer -->
 <footer class="bg-surface-container border-t border-low w-full py-stack-lg">
 <div class="flex flex-col md:flex-row justify-between items-center gap-stack-md px-margin-page max-w-container-default mx-auto">
-<p class="font-body-base text-text-muted">© 2026 JenB • Built with precision &amp; caffeine</p>
+<p class="font-body-base text-text-muted">© 2026 Jen Bentulan (SupAhSusHi). All artwork rights reserved — no reproduction or commercial use without permission.</p>
 <div class="flex gap-6">
 <a class="text-text-muted hover:text-text-main transition-colors underline decoration-primary decoration-2 underline-offset-4" href="https://github.com/supahsushi">GitHub</a>
 <a class="text-text-muted hover:text-text-main transition-colors underline decoration-primary decoration-2 underline-offset-4" href="https://www.linkedin.com/in/jin4">LinkedIn</a>
@@ -619,9 +643,12 @@ A collection of AI-generated worlds, characters, and concepts — each one built
 <button id="modal-close" class="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-surface-interactive border border-low flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-colors">
 <span class="material-symbols-outlined">close</span>
 </button>
-<div class="md:w-1/2 rounded-2xl overflow-hidden border border-low shrink-0">
+<div class="md:w-1/2 rounded-2xl overflow-hidden border border-low shrink-0 relative">
 <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
 <video id="modal-video" class="w-full h-full object-cover hidden" controls loop playsinline></video>
+<div class="watermark">
+<span>SupAhSusHi &nbsp;&nbsp;&nbsp; &copy; Jen Bentulan &nbsp;&nbsp;&nbsp; SupAhSusHi &nbsp;&nbsp;&nbsp; &copy; Jen Bentulan</span>
+</div>
 </div>
 <div class="md:w-1/2 flex flex-col justify-center gap-4">
 <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Concept</span>
@@ -671,6 +698,11 @@ modal.addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
+});
+
+document.querySelectorAll('img, video').forEach(el => {
+    el.addEventListener('contextmenu', (e) => e.preventDefault());
+    el.addEventListener('dragstart', (e) => e.preventDefault());
 });
 </script>
 
