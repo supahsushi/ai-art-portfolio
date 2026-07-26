@@ -1003,27 +1003,26 @@ const modalVideo = document.getElementById('modal-video');
 const modalTitle = document.getElementById('modal-title');
 const modalDescription = document.getElementById('modal-description');
 
-function getTileAspectRatio(tile) {
-    const cls = tile.className;
-    if (/aspect-square/.test(cls)) return 1;
-    const m = cls.match(/aspect-\[(\d+)\/(\d+)\]/);
-    if (m) return parseInt(m[1], 10) / parseInt(m[2], 10);
-    return 1;
+function applyModalLayout(ratio) {
+    const isWide = ratio > 1.15;
+    if (isWide) {
+        modalBody.classList.remove('md:flex-row', 'md:items-start');
+        modalMediaWrap.classList.remove('md:w-2/5');
+        modalTextWrap.classList.remove('md:w-3/5');
+    } else {
+        modalBody.classList.add('md:flex-row', 'md:items-start');
+        modalMediaWrap.classList.add('md:w-2/5');
+        modalTextWrap.classList.add('md:w-3/5');
+    }
 }
 
 document.querySelectorAll('.tile').forEach(tile => {
     tile.addEventListener('click', () => {
-        const ratio = getTileAspectRatio(tile);
-        const isWide = ratio > 1.15;
-        if (isWide) {
-            modalBody.classList.remove('md:flex-row', 'md:items-start');
-            modalMediaWrap.classList.remove('md:w-2/5');
-            modalTextWrap.classList.remove('md:w-3/5');
-        } else {
-            modalBody.classList.add('md:flex-row', 'md:items-start');
-            modalMediaWrap.classList.add('md:w-2/5');
-            modalTextWrap.classList.add('md:w-3/5');
-        }
+        const probe = new Image();
+        probe.onload = () => applyModalLayout(probe.naturalWidth / probe.naturalHeight);
+        probe.onerror = () => applyModalLayout(1);
+        probe.src = tile.dataset.image;
+
         if (tile.dataset.video) {
             modalVideo.src = tile.dataset.video;
             modalVideo.poster = tile.dataset.image;
