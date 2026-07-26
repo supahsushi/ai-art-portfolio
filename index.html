@@ -974,18 +974,18 @@ I'm not the most technical prompt writer out there, but every piece in this gall
 
 <!-- Modal -->
 <div id="modal" class="fixed inset-0 z-[100] items-center justify-center p-4 md:p-12 bg-background/90 backdrop-blur-sm">
-<div class="relative max-w-3xl w-full max-h-[90vh] overflow-y-auto border-figma rounded-3xl glass-card p-6 md:p-10 flex flex-col gap-6">
+<div id="modal-body" class="relative max-w-3xl w-full max-h-[90vh] overflow-y-auto border-figma rounded-3xl glass-card p-6 md:p-10 flex flex-col gap-6">
 <button id="modal-close" class="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-surface-interactive border border-low flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container transition-colors">
 <span class="material-symbols-outlined">close</span>
 </button>
-<div class="w-full rounded-2xl overflow-hidden border border-low relative">
-<img id="modal-image" src="" alt="" class="w-full h-auto max-h-[60vh] object-contain mx-auto">
-<video id="modal-video" class="w-full h-auto max-h-[60vh] object-contain hidden mx-auto" controls loop playsinline></video>
+<div id="modal-media-wrap" class="w-full rounded-2xl overflow-hidden border border-low relative shrink-0">
+<img id="modal-image" src="" alt="" class="w-full h-auto max-h-[70vh] object-contain mx-auto">
+<video id="modal-video" class="w-full h-auto max-h-[70vh] object-contain hidden mx-auto" controls loop playsinline></video>
 <div class="watermark">
 <span>SupAhSusHi &nbsp;&nbsp;&nbsp; &copy; Jen Bentulan &nbsp;&nbsp;&nbsp; SupAhSusHi &nbsp;&nbsp;&nbsp; &copy; Jen Bentulan</span>
 </div>
 </div>
-<div class="flex flex-col gap-3">
+<div id="modal-text-wrap" class="flex flex-col gap-3">
 <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Concept</span>
 <h3 id="modal-title" class="font-section-header text-2xl md:text-3xl text-primary"></h3>
 <p id="modal-description" class="font-body-base text-sm md:text-base text-on-surface-variant leading-relaxed text-balance"></p>
@@ -995,13 +995,35 @@ I'm not the most technical prompt writer out there, but every piece in this gall
 
 <script>
 const modal = document.getElementById('modal');
+const modalBody = document.getElementById('modal-body');
+const modalMediaWrap = document.getElementById('modal-media-wrap');
+const modalTextWrap = document.getElementById('modal-text-wrap');
 const modalImage = document.getElementById('modal-image');
 const modalVideo = document.getElementById('modal-video');
 const modalTitle = document.getElementById('modal-title');
 const modalDescription = document.getElementById('modal-description');
 
+function getTileAspectRatio(tile) {
+    const cls = tile.className;
+    if (/aspect-square/.test(cls)) return 1;
+    const m = cls.match(/aspect-\[(\d+)\/(\d+)\]/);
+    if (m) return parseInt(m[1], 10) / parseInt(m[2], 10);
+    return 1;
+}
+
 document.querySelectorAll('.tile').forEach(tile => {
     tile.addEventListener('click', () => {
+        const ratio = getTileAspectRatio(tile);
+        const isWide = ratio > 1.15;
+        if (isWide) {
+            modalBody.classList.remove('md:flex-row', 'md:items-start');
+            modalMediaWrap.classList.remove('md:w-2/5');
+            modalTextWrap.classList.remove('md:w-3/5');
+        } else {
+            modalBody.classList.add('md:flex-row', 'md:items-start');
+            modalMediaWrap.classList.add('md:w-2/5');
+            modalTextWrap.classList.add('md:w-3/5');
+        }
         if (tile.dataset.video) {
             modalVideo.src = tile.dataset.video;
             modalVideo.poster = tile.dataset.image;
